@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://baauilwjsvnju"]
+
+[ext_resource type="Script" path="res://modules/shared/death/death.script.gd" id="1_0s2rg"]
+[ext_resource type="AudioStream" uid="uid://cgl5ggg06mdg8" path="res://assets/sounds/hurt.wav" id="2_tiq4w"]
+
+[node name="Hitbox" type="Area2D"]
+script = ExtResource("1_0s2rg")
+
+[node name="PlayerHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_tiq4w")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

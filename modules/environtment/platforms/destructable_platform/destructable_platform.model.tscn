@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvbnalr5vaiqs"]
+
+[ext_resource type="Texture2D" uid="uid://bg1kltjef4hjd" path="res://assets/sprites/environtment/platforms/platforms.png" id="1_3bajx"]
+[ext_resource type="Script" path="res://modules/environtment/platforms/destructable_platform/destructable_platform.script.gd" id="1_112xp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jrgnn"]
+size = Vector2(32, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4fv4s"]
+size = Vector2(32, 4)
+
+[node name="SelfDestructPlatform" type="AnimatableBody2D"]
+script = ExtResource("1_112xp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_3bajx")
+region_enabled = true
+region_rect = Rect2(16, 0, 32, 9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jrgnn")
+one_way_collision = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_4fv4s")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
